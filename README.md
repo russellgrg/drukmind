@@ -81,25 +81,6 @@ dist/<project-name>/
 
 ⸻
 
-🌐 Deploying
-
-You can deploy with:
-
-Netlify (recommended)
-	•	Connect GitHub repo → Netlify auto-deploys
-	•	Build command: ng build --configuration production
-	•	Publish directory: dist/<project-name>
-
-Vercel
-	•	Import GitHub repo
-	•	Uses same build + output settings
-
-GitHub Pages
-
-npx angular-cli-ghpages --dir=dist/<project-name>
-
-⸻
-
 📁 Folder Structure (simplified)
 
 src/
