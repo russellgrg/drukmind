@@ -1,0 +1,28 @@
+<header class="main-header">
+  <div class="container">
+    <nav class="navbar">
+      <div class="nav-brand">
+        <i class="bi bi-flower1"></i>
+        <span class="brand-text">DrukMind</span>
+      </div>
+      
+      <div class="nav-links">
+        <a 
+          *ngFor="let item of navItems" 
+          [routerLink]="item.path" 
+          class="nav-link"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{exact: true}">
+          <i [class]="item.icon"></i>
+          {{ item.label }}
+        </a>
+      </div>
+
+      <div class="nav-actions">
+        <button class="btn btn-outline" routerLink="/about">
+          Learn More
+        </button>
+      </div>
+    </nav>
+  </div>
+</header>

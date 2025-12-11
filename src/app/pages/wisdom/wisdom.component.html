@@ -1,0 +1,206 @@
+<div class="wisdom-page">
+  <!-- Use shared header -->
+  <app-header></app-header>
+
+  <!-- Improved Hero Section -->
+  <section class="wisdom-hero">
+    <div class="hero-background">
+      <div class="hero-pattern"></div>
+    </div>
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <i class="bi bi-award"></i>
+          Bhutanese Wisdom Collection
+        </div>
+        
+        <h1 class="hero-title">
+          Ancient Wisdom for
+          <span class="gradient-text">Modern Life</span>
+        </h1>
+        
+        <p class="hero-description">
+          Discover timeless quotes, proverbs, and teachings from Bhutan's rich cultural heritage. 
+          Each piece of wisdom is carefully curated to bring peace, clarity, and purpose to your daily life.
+        </p>
+
+        <div class="hero-stats">
+          <div class="stat-item">
+            <div class="stat-number">{{ allQuotes.length }}+</div>
+            <div class="stat-label">Wisdom Quotes</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">{{ categories.length - 1 }}+</div>
+            <div class="stat-label">Categories</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">100%</div>
+            <div class="stat-label">Authentic Sources</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Quote of the Day -->
+  <section class="featured-quote-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Quote of the Day</h2>
+        <p>Start your journey with today's featured wisdom</p>
+      </div>
+      
+      <div class="featured-quote-card">
+        <div class="quote-decoration">
+          <i class="bi bi-quote"></i>
+        </div>
+        <blockquote class="featured-quote-text">
+          "{{ getFeaturedQuote().text }}"
+        </blockquote>
+        <div class="quote-author">
+          — {{ getFeaturedQuote().author }}
+        </div>
+        <div class="quote-meta">
+          <span class="quote-category">{{ getFeaturedQuote().category }}</span>
+          <span *ngIf="getFeaturedQuote().source" class="quote-source">{{ getFeaturedQuote().source }}</span>
+        </div>
+        <div class="quote-actions">
+          <button class="btn btn-primary" (click)="toggleFavorite(getFeaturedQuote())">
+            <i class="bi" [class.bi-heart]="!getFeaturedQuote().isFavorite" [class.bi-heart-fill]="getFeaturedQuote().isFavorite"></i>
+            {{ getFeaturedQuote().isFavorite ? 'Saved' : 'Save Quote' }}
+          </button>
+          <button class="btn btn-primary">
+            <i class="bi bi-share"></i>
+            Share
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Search and Browse Section -->
+  <section class="browse-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Explore Wisdom Library</h2>
+        <p>Search through our collection of Bhutanese wisdom</p>
+      </div>
+
+      <div class="search-container">
+        <div class="search-box">
+          <i class="bi bi-search"></i>
+          <input 
+            type="text" 
+            placeholder="Search for quotes, authors, or categories..." 
+            (input)="onSearchChange($event)">
+        </div>
+        
+        <div class="quick-filters">
+          <div class="filter-title">Quick Categories:</div>
+          <div class="filter-chips">
+            <button 
+              *ngFor="let category of categories" 
+              class="filter-chip"
+              [class.active]="selectedCategory === category"
+              (click)="filterByCategory(category)">
+              {{ category }}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Results Count -->
+      <div class="results-header">
+        <h3>Showing {{ filteredQuotes.length }} of {{ allQuotes.length }} quotes</h3>
+        <div *ngIf="selectedCategory !== 'All'" class="active-filter">
+          Category: <strong>{{ selectedCategory }}</strong>
+          <button class="clear-filter" (click)="filterByCategory('All')">
+            <i class="bi bi-x"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Quotes Grid -->
+      <div class="quotes-grid">
+        <div *ngFor="let quote of filteredQuotes" class="quote-card">
+          <div class="card-header">
+            <div class="category-badge">{{ quote.category }}</div>
+            <button 
+              class="favorite-btn"
+              [class.favorited]="quote.isFavorite"
+              (click)="toggleFavorite(quote)">
+              <i class="bi" [class.bi-heart]="!quote.isFavorite" [class.bi-heart-fill]="quote.isFavorite"></i>
+            </button>
+          </div>
+          
+          <div class="card-content">
+            <div class="quote-text">"{{ quote.text }}"</div>
+            <div class="quote-author">— {{ quote.author }}</div>
+            <div *ngIf="quote.source" class="quote-source">{{ quote.source }}</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Empty State -->
+      <div *ngIf="filteredQuotes.length === 0" class="empty-state">
+        <div class="empty-icon">
+          <i class="bi bi-search"></i>
+        </div>
+        <h3>No wisdom found</h3>
+        <p>Try adjusting your search terms or browse all categories</p>
+        <button class="btn btn-primary" (click)="filterByCategory('All')">
+          <i class="bi bi-arrow-clockwise"></i>
+          Show All Quotes
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Favorites Section -->
+  <section *ngIf="getFavoriteQuotes().length > 0" class="favorites-section">
+    <div class="container">
+      <div class="section-header">
+        <h2><i class="bi bi-heart-fill"></i> Your Favorite Wisdom</h2>
+        <p>Quotes that inspire you the most</p>
+      </div>
+
+      <div class="favorites-grid">
+        <div *ngFor="let quote of getFavoriteQuotes()" class="favorite-card">
+          <div class="favorite-content">
+            <div class="quote-text">"{{ quote.text }}"</div>
+            <div class="quote-meta">
+              <span class="author">— {{ quote.author }}</span>
+              <span class="category">{{ quote.category }}</span>
+            </div>
+          </div>
+          <button class="remove-btn" (click)="toggleFavorite(quote)" title="Remove from favorites">
+            <i class="bi bi-x"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Call to Action -->
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-content">
+        <h2>Want More Wisdom?</h2>
+        <p>Explore our mindfulness practices and cultural insights to deepen your journey</p>
+        <div class="cta-actions">
+          <button class="btn btn-primary" routerLink="/practices">
+            <i class="bi bi-wind"></i>
+            Try Mindful Practices
+          </button>
+          <button class="btn btn-outline" routerLink="/culture">
+            <i class="bi bi-globe"></i>
+            Explore Culture
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <app-footer></app-footer>
+</div>

@@ -1,0 +1,123 @@
+<div class="practice-session-page">
+  <!-- Header -->
+  <app-header></app-header>
+
+  <!-- Practice Session -->
+  <section class="practice-session">
+    <div class="container">
+      <!-- Practice Header -->
+      <div class="practice-header">
+        <button class="back-btn" (click)="goBack()">
+          <i class="bi bi-arrow-left"></i>
+          Back to Practices
+        </button>
+        <div class="practice-info">
+          <h1>{{ practiceTitle }}</h1>
+          <div class="practice-meta">
+            <span class="cycle">Cycle {{ currentCycle }} of {{ totalCycles }}</span>
+            <span class="duration">~5 minutes</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Breathing Animation -->
+      <div class="breathing-animation">
+        <div class="animation-container">
+          <div 
+            class="breathing-circle"
+            [style.width.px]="getCircleSize()"
+            [style.height.px]="getCircleSize()"
+            [style.background]="getCircleColor()">
+            <div class="circle-content">
+              <div class="time-remaining">{{ timeRemaining }}</div>
+              <div class="phase-name">{{ getCurrentStep().phase | titlecase }}</div>
+            </div>
+          </div>
+          
+          <!-- Progress indicator -->
+          <div class="progress-indicator">
+            <div class="step-progress">
+              <div 
+                class="progress-bar" 
+                [style.width.%]="progress">
+              </div>
+            </div>
+            <div class="step-info">
+              Step {{ currentStep + 1 }} of {{ practiceSteps.length }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Instructions -->
+      <div class="instructions-section">
+        <div class="instruction-card">
+          <h3>{{ getCurrentStep().instruction }}</h3>
+          <p>{{ getCurrentStep().description }}</p>
+          
+          <div class="step-breakdown">
+            <div class="step-item" *ngFor="let step of practiceSteps; let i = index" [class.active]="i === currentStep">
+              <div class="step-number">{{ i + 1 }}</div>
+              <div class="step-details">
+                <div class="step-phase">{{ step.phase | titlecase }}</div>
+                <div class="step-duration">{{ step.duration }}s</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Controls -->
+      <div class="controls-section">
+        <div class="controls">
+          <button *ngIf="!isPlaying" class="btn btn-primary btn-large" (click)="startPractice()">
+            <i class="bi bi-play-circle"></i>
+            Start Practice
+          </button>
+          
+          <div *ngIf="isPlaying" class="active-controls">
+            <button class="btn btn-outline" (click)="pausePractice()">
+              <i class="bi bi-pause-circle"></i>
+              Pause
+            </button>
+            <button class="btn btn-outline" (click)="skipToNext()">
+              <i class="bi bi-skip-forward-circle"></i>
+              Next Step
+            </button>
+            <button class="btn btn-outline" (click)="stopPractice()">
+              <i class="bi bi-stop-circle"></i>
+              Stop
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Practice Tips -->
+      <div class="tips-section">
+        <h3>Practice Tips</h3>
+        <div class="tips-grid">
+          <div class="tip-card">
+            <i class="bi bi-clock"></i>
+            <h4>Find a Quiet Space</h4>
+            <p>Choose a peaceful environment where you won't be disturbed for 5-10 minutes.</p>
+          </div>
+          <div class="tip-card">
+            <i class="bi bi-posture"></i>
+            <h4>Comfortable Posture</h4>
+            <p>Sit with your back straight but relaxed. You can sit on a chair or cushion.</p>
+          </div>
+          <div class="tip-card">
+            <i class="bi bi-wind"></i>
+            <h4>Focus on Breath</h4>
+            <p>Keep your attention on your breathing. If your mind wanders, gently bring it back.</p>
+          </div>
+          <div class="tip-card">
+            <i class="bi bi-heart"></i>
+            <h4>Be Gentle</h4>
+            <p>Don't force your breath. Let it flow naturally and comfortably.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

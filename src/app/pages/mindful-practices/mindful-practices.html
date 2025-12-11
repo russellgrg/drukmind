@@ -1,0 +1,313 @@
+<div class="practices-page">
+  <!-- Header -->
+  <app-header></app-header>
+
+  <!-- Hero Section -->
+  <section class="practices-hero">
+    <div class="hero-background">
+      <div class="hero-pattern"></div>
+    </div>
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <i class="bi bi-wind"></i>
+          Mindful Living Practices
+        </div>
+        
+        <h1 class="hero-title">
+          Cultivate Inner
+          <span class="gradient-text">Peace</span>
+          Through Practice
+        </h1>
+        
+        <p class="hero-description">
+          Discover guided mindfulness practices rooted in Buddhist traditions and modern psychology. 
+          From breathing exercises to meditation techniques, find the perfect practice for your journey.
+        </p>
+
+        <div class="hero-stats">
+          <div class="stat-item">
+            <div class="stat-number">{{ allPractices.length }}+</div>
+            <div class="stat-label">Guided Practices</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">{{ categories.length - 1 }}+</div>
+            <div class="stat-label">Practice Types</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">5-20</div>
+            <div class="stat-label">Minutes Each</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Practices -->
+<section class="featured-practices" *ngIf="featuredPractices.length > 0">
+  <div class="container">
+    <div class="section-header">
+      <h2>Featured Practices</h2>
+      <p>Start with these popular mindfulness exercises</p>
+    </div>
+
+    <div class="featured-grid">
+      <div *ngFor="let practice of featuredPractices" class="featured-card">
+        <div class="card-image" [class.has-image]="practice.image">
+          <!-- Show image if available -->
+          <div class="practice-image" *ngIf="practice.image">
+            <img [src]="practice.image" [alt]="practice.title" />
+          </div>
+          <!-- Show gradient background with icon if no image -->
+          <div class="image-placeholder" *ngIf="!practice.image">
+            <i [class]="practice.icon"></i>
+          </div>
+          <div class="card-badge">
+            <span class="duration">{{ getDurationText(practice.duration) }}</span>
+            <span class="difficulty" [style.background]="getDifficultyColor(practice.difficulty)">
+              {{ practice.difficulty }}
+            </span>
+          </div>
+        </div>
+        
+        <div class="card-content">
+          <div class="practice-type">
+            <i [class]="getPracticeTypeIcon(practice.type)"></i>
+            {{ practice.type | titlecase }}
+          </div>
+          <h3 class="practice-title">{{ practice.title }}</h3>
+          <p class="practice-description">{{ practice.description }}</p>
+          
+          <div class="benefits-preview">
+            <div *ngFor="let benefit of practice.benefits.slice(0, 2)" class="benefit-tag">
+              {{ benefit }}
+            </div>
+            <div *ngIf="practice.benefits.length > 2" class="benefit-more">
+              +{{ practice.benefits.length - 2 }} more
+            </div>
+          </div>
+        </div>
+
+        <div class="card-actions">
+          <button class="btn btn-primary" (click)="startPractice(practice)">
+            <i class="bi bi-play-circle"></i>
+            Start Practice
+          </button>
+          <button class="btn btn-outline">
+            <i class="bi bi-info-circle"></i>
+            Learn More
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <!-- Browse All Practices -->
+  <section class="browse-practices">
+    <div class="container">
+      <div class="section-header">
+        <h2>Browse All Practices</h2>
+        <p>Find the perfect practice for your needs and experience level</p>
+      </div>
+
+      <!-- Search and Filters -->
+      <div class="filters-section">
+        <div class="search-container">
+          <div class="search-box">
+            <i class="bi bi-search"></i>
+            <input 
+              type="text" 
+              placeholder="Search practices..." 
+              (input)="onSearchChange($event)">
+          </div>
+        </div>
+
+        <div class="filter-controls">
+          <div class="filter-group">
+            <label>Practice Type:</label>
+            <div class="filter-chips">
+              <button 
+                *ngFor="let category of categories" 
+                class="filter-chip"
+                [class.active]="selectedCategory === category.id"
+                (click)="filterByCategory(category.id)">
+                <i [class]="category.icon"></i>
+                {{ category.name }}
+                <span class="count">({{ category.count }})</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="filter-group">
+            <label>Difficulty Level:</label>
+            <div class="filter-chips">
+              <button 
+                *ngFor="let difficulty of difficulties" 
+                class="filter-chip"
+                [class.active]="selectedDifficulty === difficulty.id"
+                (click)="filterByDifficulty(difficulty.id)">
+                {{ difficulty.name }}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Results Info -->
+      <div class="results-info">
+        <h3>{{ filteredPractices.length }} practices found</h3>
+        <div class="active-filters" *ngIf="selectedCategory !== 'all' || selectedDifficulty !== 'all'">
+  <span *ngIf="selectedCategory !== 'all'" class="active-filter">
+    Type: {{ getCategoryDisplayName(selectedCategory) }}
+    <button (click)="filterByCategory('all')"><i class="bi bi-x"></i></button>
+  </span>
+  <span *ngIf="selectedDifficulty !== 'all'" class="active-filter">
+    Level: {{ selectedDifficulty | titlecase }}
+    <button (click)="filterByDifficulty('all')"><i class="bi bi-x"></i></button>
+  </span>
+</div>
+      </div>
+
+      <!-- Practices Grid -->
+      <div class="practices-grid">
+        <div *ngFor="let practice of filteredPractices" class="practice-card">
+          <div class="card-header">
+            <div class="practice-meta">
+              <span class="practice-type">
+                <i [class]="getPracticeTypeIcon(practice.type)"></i>
+                {{ practice.type | titlecase }}
+              </span>
+              <span class="duration">
+                <i class="bi bi-clock"></i>
+                {{ getDurationText(practice.duration) }}
+              </span>
+            </div>
+            <span class="difficulty-badge" [style.background]="getDifficultyColor(practice.difficulty)">
+              {{ practice.difficulty }}
+            </span>
+          </div>
+
+          <div class="card-content">
+            <h3 class="practice-title">{{ practice.title }}</h3>
+            <p class="practice-description">{{ practice.description }}</p>
+            
+            <div class="benefits-list">
+              <div *ngFor="let benefit of practice.benefits.slice(0, 3)" class="benefit-item">
+                <i class="bi bi-check-circle"></i>
+                {{ benefit }}
+              </div>
+            </div>
+
+            <div class="steps-preview">
+              <div class="steps-count">
+                <i class="bi bi-list-ol"></i>
+                {{ practice.steps.length }} steps
+              </div>
+            </div>
+          </div>
+
+          <div class="card-actions">
+            <button class="btn btn-primary" (click)="startPractice(practice)">
+              <i class="bi bi-play-circle"></i>
+              Start
+            </button>
+            <button class="btn btn-outline">
+              <i class="bi bi-bookmark"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Empty State -->
+      <div *ngIf="filteredPractices.length === 0" class="empty-state">
+        <div class="empty-icon">
+          <i class="bi bi-wind"></i>
+        </div>
+        <h3>No practices found</h3>
+        <p>Try adjusting your filters or search terms</p>
+        <button class="btn btn-primary" (click)="filterByCategory('all'); filterByDifficulty('all');">
+          <i class="bi bi-arrow-clockwise"></i>
+          Reset Filters
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Practice Benefits Section -->
+  <section class="benefits-section">
+    <div class="container">
+      <div class="benefits-content">
+        <div class="benefits-text">
+          <h2>Why Practice Mindfulness?</h2>
+          <p>Regular mindfulness practice has been scientifically proven to transform your mental and physical well-being.</p>
+          
+          <div class="benefits-list">
+            <div class="benefit-item">
+              <i class="bi bi-heart-pulse"></i>
+              <div>
+                <h4>Reduces Stress & Anxiety</h4>
+                <p>Lower cortisol levels and calm your nervous system</p>
+              </div>
+            </div>
+            <div class="benefit-item">
+              <i class="bi bi-lightbulb"></i>
+              <div>
+                <h4>Improves Focus</h4>
+                <p>Enhance concentration and attention span</p>
+              </div>
+            </div>
+            <div class="benefit-item">
+              <i class="bi bi-emoji-smile"></i>
+              <div>
+                <h4>Increases Happiness</h4>
+                <p>Develop greater emotional balance and well-being</p>
+              </div>
+            </div>
+            <div class="benefit-item">
+              <i class="bi bi-shield-check"></i>
+              <div>
+                <h4>Boosts Immunity</h4>
+                <p>Strengthen your body's natural defense systems</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="benefits-visual">
+          <div class="visual-card">
+            <div class="card-pattern"></div>
+            <div class="card-content">
+              <i class="bi bi-infinity"></i>
+              <h3>Daily Practice</h3>
+              <p>Just 10 minutes a day can transform your life</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-content">
+        <h2>Ready to Begin Your Practice?</h2>
+        <p>Start with a 5-minute breathing exercise and experience the benefits of mindfulness today</p>
+        <div class="cta-actions">
+          <button class="btn btn-primary btn-large" (click)="startPractice(allPractices[0])">
+            <i class="bi bi-play-circle"></i>
+            Start First Practice
+          </button>
+          <button class="btn btn-primary btn-large">
+            <i class="bi bi-question-circle"></i>
+            How to Get Started
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <app-footer></app-footer>
+</div>

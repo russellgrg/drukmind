@@ -1,0 +1,259 @@
+<div class="home-page">
+  <app-header></app-header>
+  
+  <!-- Professional Hero Section -->
+  <section class="hero-section">
+    <div class="hero-background">
+      <div class="hero-pattern"></div>
+      <!-- Only Hero Background Image -->
+      <div class="hero-image">
+        <img src="assets/images/hero-bhutan-landscape.jpg" alt="Bhutanese landscape with mountains and prayer flags" />
+      </div>
+    </div>
+    
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <i class="bi bi-award"></i>
+          Trusted by 50,000+ mindful individuals
+        </div>
+        
+        <h1 class="hero-title">
+          Find Your Center with
+          <span class="gradient-text">Bhutanese Wisdom</span>
+        </h1>
+        
+        <p class="hero-description">
+          DrukMind blends ancient Bhutanese philosophy with modern mindfulness practices. 
+          Experience the wisdom of Gross National Happiness through guided meditations, 
+          inspirational quotes, and cultural insights that transform daily living.
+        </p>
+
+        <div class="hero-actions">
+          <button class="btn btn-primary btn-large">
+            <i class="bi bi-play-circle"></i>
+            Start Your Journey
+          </button>
+          <button class="btn btn-outline btn-large">
+            <i class="bi bi-book"></i>
+            Explore Wisdom
+          </button>
+        </div>
+
+        <div class="hero-stats">
+          <div class="stat-item">
+            <div class="stat-number">500+</div>
+            <div class="stat-label">Wisdom Quotes</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">25+</div>
+            <div class="stat-label">Guided Practices</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">50K+</div>
+            <div class="stat-label">Mindful Users</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="visual-card">
+          <!-- Removed the meditation image, keeping only the quote -->
+          <div class="card-header">
+            <i class="bi bi-quote"></i>
+          </div>
+          <p class="card-quote">"The journey of mindfulness begins with a single breath..."</p>
+          <div class="card-author">— Bhutanese Wisdom</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Trust Indicators -->
+  <section class="trust-section">
+    <div class="container">
+      <div class="trust-grid">
+        <div *ngFor="let indicator of trustIndicators" class="trust-item">
+          <i [class]="indicator.icon" class="trust-icon"></i>
+          <span class="trust-text">{{ indicator.text }}</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features-section">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">A Complete Mindfulness Ecosystem</h2>
+        <p class="section-description">
+          Discover tools and wisdom that nurture mind, body, and spirit through authentic Bhutanese philosophy
+        </p>
+      </div>
+
+      <div class="features-grid">
+        <div *ngFor="let feature of features; let i = index" class="feature-card">
+          <!-- Feature Images Only (4 images for 4 features) -->
+          <div class="feature-image">
+            <img [src]="'assets/images/feature-' + (i + 1) + '.jpg'" [alt]="feature.title" />
+          </div>
+          
+          <div class="feature-icon-container" [style.background]="feature.gradient">
+            <i [class]="feature.icon" class="feature-icon"></i>
+          </div>
+          
+          <div class="feature-content">
+            <h3 class="feature-title">{{ feature.title }}</h3>
+            <p class="feature-description">{{ feature.description }}</p>
+            <div class="feature-stats">
+              <span class="stats-badge">{{ feature.stats }}</span>
+            </div>
+          </div>
+
+          <div class="feature-actions">
+            <button class="feature-btn">
+              Explore
+              <i class="bi bi-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Daily Wisdom Section -->
+  <section class="wisdom-section">
+    <div class="container">
+      <div class="wisdom-card">
+        <!-- Removed wisdom background image -->
+        <div class="wisdom-header">
+          <div class="wisdom-badge">
+            <i class="bi bi-lightning"></i>
+            Today's Featured Wisdom
+          </div>
+          <button class="wisdom-share-btn">
+            <i class="bi bi-share"></i>
+          </button>
+        </div>
+
+        <div class="wisdom-content">
+          <div class="quote-mark">
+            <i class="bi bi-quote"></i>
+          </div>
+          
+          <blockquote class="wisdom-quote">
+            "{{ currentQuote.text }}"
+          </blockquote>
+
+          <div class="wisdom-meta">
+            <div class="author-info">
+              <div class="author-name">{{ currentQuote.author }}</div>
+              <div class="author-context">{{ currentQuote.source }}</div>
+            </div>
+            <div class="quote-category">
+              <span class="category-badge">{{ currentQuote.category }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="wisdom-actions">
+          <button class="action-btn favorite">
+            <i class="bi bi-heart"></i>
+            Save
+          </button>
+          <button class="action-btn refresh" (click)="nextQuote()">
+            <i class="bi bi-arrow-clockwise"></i>
+            New Wisdom
+          </button>
+          <button class="action-btn meditate">
+            <i class="bi bi-wind"></i>
+            Practice
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section class="testimonials-section">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Trusted by Mindful Communities</h2>
+        <p class="section-description">
+          Join thousands who have transformed their lives through Bhutanese wisdom
+        </p>
+      </div>
+
+      <div class="testimonials-grid">
+        <div *ngFor="let testimonial of testimonials" class="testimonial-card">
+          <!-- Removed testimonial images -->
+          <div class="testimonial-header">
+            <div class="avatar-placeholder">
+              <i class="bi bi-person-circle"></i>
+            </div>
+            <div class="reviewer-info">
+              <div class="reviewer-name">{{ testimonial.author }}</div>
+              <div class="reviewer-role">{{ testimonial.role }}</div>
+              <div class="reviewer-location">{{ testimonial.location }}</div>
+            </div>
+            <div class="rating">
+              <i *ngFor="let star of generateStars(testimonial.rating)" 
+                 class="bi bi-star-fill"></i>
+            </div>
+          </div>
+
+          <div class="testimonial-content">
+            <p>"{{ testimonial.text }}"</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Final CTA Section -->
+  <section class="cta-section">
+    <div class="container">
+      <!-- Removed CTA background image -->
+      <div class="cta-content">
+        <h2>Begin Your Mindful Journey Today</h2>
+        <p>
+          Join a global community discovering peace, purpose, and happiness through 
+          the timeless wisdom of Bhutan. No registration required - start immediately.
+        </p>
+        
+        <div class="cta-actions">
+          <button class="btn btn-primary btn-xlarge">
+            <i class="bi bi-play-circle"></i>
+            Start Free Practice
+          </button>
+          <button class="btn btn-outline btn-xlarge">
+            <i class="bi bi-book"></i>
+            Explore Wisdom Library
+          </button>
+        </div>
+
+        <div class="cta-features">
+          <div class="feature">
+            <i class="bi bi-clock"></i>
+            <span>5-minute practices</span>
+          </div>
+          <div class="feature">
+            <i class="bi bi-phone"></i>
+            <span>Available on all devices</span>
+          </div>
+          <div class="feature">
+            <i class="bi bi-translate"></i>
+            <span>Multiple languages</span>
+          </div>
+          <div class="feature">
+            <i class="bi bi-shield-check"></i>
+            <span>Privacy guaranteed</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <app-footer></app-footer>
+</div>

@@ -1,0 +1,350 @@
+.practice-session-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1a2f1a 0%, #2c5530 100%);
+  color: white;
+}
+
+.practice-session {
+  padding: 2rem 0;
+
+  .practice-header {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    margin-bottom: 2rem;
+
+    .back-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.2);
+      }
+    }
+
+    .practice-info {
+      h1 {
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .practice-meta {
+        display: flex;
+        gap: 1.5rem;
+        opacity: 0.8;
+
+        .cycle, .duration {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+        }
+      }
+    }
+  }
+}
+
+.breathing-animation {
+  display: flex;
+  justify-content: center;
+  margin: 3rem 0;
+
+  .animation-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .breathing-circle {
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 1s ease;
+    box-shadow: 0 0 50px rgba(255, 255, 255, 0.1);
+    position: relative;
+
+    .circle-content {
+      text-align: center;
+      color: white;
+
+      .time-remaining {
+        font-size: 3rem;
+        font-weight: 700;
+        line-height: 1;
+        margin-bottom: 0.5rem;
+      }
+
+      .phase-name {
+        font-size: 1.2rem;
+        opacity: 0.9;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+    }
+  }
+
+  .progress-indicator {
+    width: 300px;
+    text-align: center;
+
+    .step-progress {
+      width: 100%;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 3px;
+      overflow: hidden;
+      margin-bottom: 0.5rem;
+
+      .progress-bar {
+        height: 100%;
+        background: #22c55e;
+        transition: width 1s linear;
+      }
+    }
+
+    .step-info {
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
+  }
+}
+
+.instructions-section {
+  margin: 3rem 0;
+
+  .instruction-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    padding: 2rem;
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+
+    h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: #d4a574;
+    }
+
+    p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+      opacity: 0.9;
+    }
+
+    .step-breakdown {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+
+      .step-item {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 8px;
+        transition: all 0.3s ease;
+
+        &.active {
+          background: rgba(212, 165, 116, 0.2);
+          border: 1px solid rgba(212, 165, 116, 0.5);
+
+          .step-number {
+            background: #d4a574;
+            color: #1a2f1a;
+          }
+        }
+
+        .step-number {
+          width: 32px;
+          height: 32px;
+          background: rgba(255, 255, 255, 0.2);
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-weight: 600;
+          font-size: 0.9rem;
+        }
+
+        .step-details {
+          .step-phase {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+          }
+
+          .step-duration {
+            font-size: 0.8rem;
+            opacity: 0.7;
+          }
+        }
+      }
+    }
+  }
+}
+
+.controls-section {
+  margin: 3rem 0;
+
+  .controls {
+    display: flex;
+    justify-content: center;
+
+    .btn {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 1rem 2rem;
+      border: 1px solid transparent;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 1rem;
+
+      &.btn-primary {
+        background: #d4a574;
+        color: #1a2f1a;
+        border: none;
+
+        &:hover {
+          background: #e9b949;
+          transform: translateY(-2px);
+        }
+      }
+
+      &.btn-outline {
+        background: transparent;
+        color: white;
+        border-color: rgba(255, 255, 255, 0.3);
+
+        &:hover {
+          background: rgba(255, 255, 255, 0.1);
+          border-color: rgba(255, 255, 255, 0.5);
+        }
+      }
+
+      &.btn-large {
+        padding: 1.25rem 2.5rem;
+        font-size: 1.1rem;
+      }
+    }
+
+    .active-controls {
+      display: flex;
+      gap: 1rem;
+    }
+  }
+}
+
+.tips-section {
+  margin: 4rem 0;
+
+  h3 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    color: #d4a574;
+  }
+
+  .tips-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    max-width: 1000px;
+    margin: 0 auto;
+
+    .tip-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 1.5rem;
+      text-align: center;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.1);
+        transform: translateY(-4px);
+      }
+
+      i {
+        font-size: 2rem;
+        color: #d4a574;
+        margin-bottom: 1rem;
+      }
+
+      h4 {
+        font-size: 1.2rem;
+        margin-bottom: 0.75rem;
+        color: white;
+      }
+
+      p {
+        opacity: 0.8;
+        line-height: 1.5;
+        margin: 0;
+      }
+    }
+  }
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .practice-session {
+    .practice-header {
+      flex-direction: column;
+      gap: 1rem;
+      text-align: center;
+
+      .practice-info h1 {
+        font-size: 2rem;
+      }
+    }
+
+    .breathing-animation .breathing-circle {
+      .circle-content .time-remaining {
+        font-size: 2.5rem;
+      }
+    }
+
+    .instructions-section .instruction-card .step-breakdown {
+      grid-template-columns: 1fr;
+    }
+
+    .controls-section .controls .active-controls {
+      flex-direction: column;
+    }
+
+    .tips-section .tips-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 0 1rem;
+  }
+
+  .breathing-animation .breathing-circle {
+    width: 150px !important;
+    height: 150px !important;
+
+    .circle-content .time-remaining {
+      font-size: 2rem;
+    }
+  }
+}

@@ -1,0 +1,96 @@
+<footer class="footer">
+  <div class="container">
+    <!-- Main Footer Content -->
+    <div class="footer-main">
+      <!-- Brand Section -->
+      <div class="footer-brand">
+        <div class="brand-logo">
+          <i class="bi bi-flower1 logo-icon"></i>
+          <span class="brand-name">DrukMind</span>
+        </div>
+        <p class="brand-tagline">
+          Cultivating mindfulness through Bhutanese wisdom and modern practices. 
+          Inspired by Gross National Happiness.
+        </p>
+        <div class="social-links">
+          <a 
+            *ngFor="let social of socialLinks" 
+            [href]="social.link" 
+            class="social-link"
+            [style.background]="social.color"
+            aria-label="Follow us on {{ social.name }}">
+            <i [class]="social.icon"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- Links Grid -->
+      <div class="footer-links-grid">
+        <div class="link-section" *ngFor="let section of footerSections | keyvalue">
+          <h3 class="section-title">{{ section.key | titlecase }}</h3>
+          <ul class="link-list">
+            <li *ngFor="let link of section.value">
+              <a [routerLink]="link.link" class="footer-link">
+                <i [class]="link.icon" class="link-icon"></i>
+                {{ link.name }}
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Newsletter Section -->
+        <div class="newsletter-section">
+          <h3 class="section-title">Stay Mindful</h3>
+          <p class="newsletter-description">
+            Get daily wisdom, mindfulness tips, and cultural insights delivered to your inbox.
+          </p>
+          <form (submit)="newsletterSubscribe($event)" class="newsletter-form">
+            <div class="input-group">
+              <input 
+                type="email" 
+                placeholder="Enter your email" 
+                class="newsletter-input"
+                required>
+              <button type="submit" class="newsletter-btn">
+                <i class="bi bi-send"></i>
+              </button>
+            </div>
+            <p class="newsletter-note">
+              No spam, just mindful content. Unsubscribe anytime.
+            </p>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer Bottom -->
+    <div class="footer-bottom">
+      <div class="footer-bottom-content">
+        <div class="copyright">
+          <p>&copy; {{ currentYear }} DrukMind. All rights reserved.</p>
+          <p class="made-with">
+            Made with <i class="bi bi-heart-fill"></i> in the Kingdom of Bhutan
+          </p>
+        </div>
+        
+        <div class="footer-legal">
+          <a [routerLink]="'/privacy'" class="legal-link">Privacy Policy</a>
+          <a [routerLink]="'/terms'" class="legal-link">Terms of Service</a>
+          <a [routerLink]="'/cookies'" class="legal-link">Cookie Policy</a>
+          <a [routerLink]="'/accessibility'" class="legal-link">Accessibility</a>
+        </div>
+
+        <div class="footer-badges">
+          <div class="badge">
+            <i class="bi bi-shield-check"></i>
+            <span>Your Data is Secure</span>
+          </div>
+          <div class="badge">
+            <i class="bi bi-globe"></i>
+            <span>100% Free Forever</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>

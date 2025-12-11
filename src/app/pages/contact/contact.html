@@ -1,0 +1,220 @@
+<!-- contact.component.html -->
+<app-header></app-header>
+
+<main class="contact-page">
+  <!-- Hero Section -->
+  <section class="contact-hero">
+    <div class="hero-background">
+      <div class="hero-pattern"></div>
+    </div>
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <i class="bi bi-chat"></i>
+          Get In Touch
+        </div>
+        
+        <h1 class="hero-title">
+          Share Your
+          <span class="gradient-text">Experience</span>
+        </h1>
+        
+        <p class="hero-description">
+          Your feedback helps us improve DrukMind and create better mindfulness experiences. 
+          We'd love to hear about your journey and suggestions.
+        </p>
+
+        <div class="hero-stats">
+          <div class="stat-item">
+            <div class="stat-number">{{ feedbackList.length }}+</div>
+            <div class="stat-label">Feedback Shared</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">24/7</div>
+            <div class="stat-label">Support</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">100%</div>
+            <div class="stat-label">Response Rate</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact & Feedback Section -->
+  <section class="contact-section section-padding">
+    <div class="container">
+      <div class="contact-grid">
+        <!-- Feedback Form -->
+        <div class="form-container">
+          <div class="form-header">
+            <h2>Share Your Feedback</h2>
+            <p>Tell us about your experience with DrukMind</p>
+          </div>
+
+          <form (ngSubmit)="submitFeedback()" class="feedback-form">
+            <!-- Name Field -->
+            <div class="form-group">
+              <label for="name">Your Name *</label>
+              <input 
+                type="text" 
+                id="name" 
+                [(ngModel)]="newFeedback.name" 
+                name="name"
+                placeholder="Enter your full name"
+                required>
+            </div>
+
+            <!-- Email Field -->
+            <div class="form-group">
+              <label for="email">Email Address *</label>
+              <input 
+                type="email" 
+                id="email" 
+                [(ngModel)]="newFeedback.email" 
+                name="email"
+                placeholder="Enter your email"
+                required>
+            </div>
+
+            <!-- Practice Selection -->
+            <div class="form-group">
+              <label for="practice">Select Practice *</label>
+              <select 
+                id="practice" 
+                [(ngModel)]="newFeedback.practice" 
+                name="practice"
+                required>
+                <option value="">Choose a practice...</option>
+                <option *ngFor="let practice of practices" [value]="practice">
+                  {{ practice }}
+                </option>
+              </select>
+            </div>
+
+            <!-- Star Rating -->
+            <div class="form-group">
+              <label>Your Rating *</label>
+              <div class="star-rating">
+                <span 
+                  *ngFor="let star of [1,2,3,4,5]; let i = index"
+                  class="star"
+                  [class.active]="(hoverRating || newFeedback.rating) >= star"
+                  (click)="setRating(star)"
+                  (mouseenter)="hoverRating = star"
+                  (mouseleave)="hoverRating = 0">
+                  ★
+                </span>
+                <span class="rating-text">
+                  {{ newFeedback.rating > 0 ? newFeedback.rating + ' star' + (newFeedback.rating > 1 ? 's' : '') : 'Select rating' }}
+                </span>
+              </div>
+            </div>
+
+            <!-- Comments -->
+            <div class="form-group">
+              <label for="comment">Your Feedback *</label>
+              <textarea 
+                id="comment" 
+                [(ngModel)]="newFeedback.comment" 
+                name="comment"
+                placeholder="Share your experience, suggestions, or anything you'd like us to know..."
+                rows="5"
+                required></textarea>
+            </div>
+
+            <!-- Submit Button -->
+            <button 
+              type="submit" 
+              class="btn btn-primary btn-large"
+              [disabled]="!isFormValid()">
+              <i class="bi bi-send"></i>
+              Submit Feedback
+            </button>
+          </form>
+        </div>
+
+        <!-- Recent Feedback Display -->
+        <div class="feedback-display">
+          <div class="display-header">
+            <h2>Recent Feedback</h2>
+            <p>What our community is saying</p>
+          </div>
+
+          <div class="feedback-list" *ngIf="feedbackList.length > 0; else noFeedback">
+            <div *ngFor="let feedback of feedbackList" class="feedback-item">
+              <div class="feedback-header">
+                <div class="user-info">
+                  <div class="user-avatar">
+                    {{ feedback.name.charAt(0).toUpperCase() }}
+                  </div>
+                  <div>
+                    <h4>{{ feedback.name }}</h4>
+                    <span class="feedback-date">{{ feedback.date }}</span>
+                  </div>
+                </div>
+                <button 
+                  class="delete-btn"
+                  (click)="deleteFeedback(feedback.id)"
+                  title="Delete feedback">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </div>
+
+              <div class="feedback-rating">
+                <span class="stars">{{ getStars(feedback.rating) }}</span>
+                <span class="practice-tag">{{ feedback.practice }}</span>
+              </div>
+
+              <p class="feedback-comment">{{ feedback.comment }}</p>
+            </div>
+          </div>
+
+          <ng-template #noFeedback>
+            <div class="no-feedback">
+              <i class="bi bi-chat-square"></i>
+              <h3>No feedback yet</h3>
+              <p>Be the first to share your experience with DrukMind!</p>
+            </div>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Additional Contact Info -->
+  <section class="info-section section-padding bg-light">
+    <div class="container">
+      <div class="section-header">
+        <h2>Other Ways to Reach Us</h2>
+        <p>We're here to help you on your mindfulness journey</p>
+      </div>
+
+      <div class="contact-methods">
+        <div class="contact-method">
+          <i class="bi bi-envelope"></i>
+          <h3>Email Us</h3>
+          <p>support&#64;drukmind.com</p>
+          <span>We'll respond within 24 hours</span>
+        </div>
+
+        <div class="contact-method">
+          <i class="bi bi-lightbulb"></i>
+          <h3>Feature Requests</h3>
+          <p>Have an idea for DrukMind?</p>
+          <span>We'd love to hear your suggestions</span>
+        </div>
+
+        <div class="contact-method">
+          <i class="bi bi-heart"></i>
+          <h3>Community</h3>
+          <p>Join our mindfulness community</p>
+          <span>Share experiences and grow together</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<app-footer></app-footer>
