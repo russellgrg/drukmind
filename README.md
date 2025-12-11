@@ -5,6 +5,14 @@ Built with Angular, the platform helps users reconnect with themselves through w
 
 ⸻
 
+🚀 Live Demo
+
+👉 https://russellgrg.github.io/drukmind/
+
+Experience DrukMind live — blending Bhutanese wisdom with modern mindfulness.
+
+⸻
+
 ✨ Features
 
 🧘‍♂️ Guided Mindfulness
